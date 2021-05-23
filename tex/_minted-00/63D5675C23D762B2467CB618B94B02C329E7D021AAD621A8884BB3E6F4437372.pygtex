@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }S \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{PdSMat}\PYG{p}{(}n\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{S} \PYG{p}{=} \PYG{n}{SymmetricMat}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+    \PYG{p}{[}\PYG{n}{P}\PYG{p}{,} \PYG{n}{D}\PYG{p}{]} \PYG{p}{=} \PYG{n}{eig}\PYG{p}{(}\PYG{n}{S}\PYG{p}{);}
+    \PYG{n}{D} \PYG{p}{=} \PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{D}\PYG{p}{);}
+    \PYG{n}{D} \PYG{p}{=} \PYG{n}{D} \PYG{o}{+} \PYG{n}{norm}\PYG{p}{(}\PYG{n}{D}\PYG{p}{)}\PYG{o}{*}\PYG{n+nb}{eye}\PYG{p}{(}\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{D}\PYG{p}{));}
+    \PYG{n}{S} \PYG{p}{=} \PYG{n}{P}\PYG{o}{*}\PYG{n}{D}\PYG{o}{*}\PYG{n}{inv}\PYG{p}{(}\PYG{n}{P}\PYG{p}{);}
+\PYG{n}{end}
+\end{Verbatim}

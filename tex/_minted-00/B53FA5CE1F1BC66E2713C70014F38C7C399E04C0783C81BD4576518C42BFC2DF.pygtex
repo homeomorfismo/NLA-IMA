@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }B \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{Cholesky}\PYG{p}{(}A\PYG{p}{)}
+\PYG{+w}{    }\PYG{k}{if} \PYG{p}{(}\PYG{n}{A}\PYG{o}{\PYGZti{}=}\PYG{n}{A}\PYG{o}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n+nb}{disp}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Input must be symmetric!\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{B} \PYG{p}{=} \PYG{n+nb}{NaN}\PYG{p}{;}
+        \PYG{k}{return}
+    \PYG{k}{else}
+        \PYG{n}{B} \PYG{p}{=} \PYG{n+nb}{tril}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+        \PYG{n}{n} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+        \PYG{k}{for} \PYG{n}{j}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+            \PYG{k}{for} \PYG{n}{k}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:(}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+                \PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)} \PYG{p}{=} \PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{k}\PYG{p}{))}\PYGZca{}\PYG{l+m+mi}{2}\PYG{p}{;}
+            \PYG{k}{end}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)}\PYG{o}{\PYGZlt{}}\PYG{p}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+                \PYG{n+nb}{disp}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Error! Pivot must be positive\PYGZsq{}}\PYG{p}{)}
+                \PYG{n}{B} \PYG{p}{=} \PYG{n+nb}{NaN}\PYG{p}{;}
+                \PYG{k}{return}
+            \PYG{k}{else}
+                \PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)} \PYG{p}{=} \PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{j}\PYG{p}{));}
+                \PYG{k}{for} \PYG{n}{i}\PYG{p}{=(}\PYG{n}{j}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{):}\PYG{n}{n}
+                    \PYG{k}{for} \PYG{n}{k}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:(}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+                        \PYG{n}{B}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)} \PYG{p}{=} \PYG{n}{B}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)}\PYG{o}{*}\PYG{n}{B}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{k}\PYG{p}{);}
+                    \PYG{k}{end}
+                    \PYG{n}{B}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)} \PYG{p}{=} \PYG{n}{B}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)}\PYG{o}{/}\PYG{n}{B}\PYG{p}{(}\PYG{n}{j}\PYG{p}{,}\PYG{n}{j}\PYG{p}{);}
+                \PYG{k}{end}
+            \PYG{k}{end}
+        \PYG{k}{end}
+    \PYG{k}{end}
+\PYG{k}{end}
+\end{Verbatim}

@@ -1,0 +1,138 @@
+%Paquetes
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{anyfontsize}
+
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%\usepackage{pxfonts}
+\usepackage[newfloat=true]{minted}
+
+\usepackage{etoolbox}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{calrsfs}
+\usepackage{mathrsfs}
+%\usepackage{bookmark}
+\usepackage{caption}
+\usepackage{mathtools}
+
+%Fuente
+\usepackage{charter}
+
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{calc}
+\usetikzlibrary{cd}
+
+%%%%% DIR FOTOS %%%%
+\graphicspath{ {./fotos/} }
+
+%%%%% ENTORNOS %%%%%
+\newtheorem{teorema}{Teorema}
+\newtheorem{proposicion}{Proposici\'on}
+\newtheorem{lema}{Lema}
+\newtheorem{corolario}{Corolario}
+\newtheorem*{idea}{Idea}
+\newtheorem{problema}{Problema}
+
+\theoremstyle{definition}
+\newtheorem{definicion}{Definici\'on}[section]
+\newtheorem{ejemplo}{Ejemplo}[section]
+\newtheorem{ejercicio}{Ejercicio}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{obs}{Observaci\'on}[section]
+\newtheorem*{sol}{Soluci\'on}
+
+\AtEndEnvironment{sol}{\null\hfill\qed}
+
+\AtEndEnvironment{definicion}{\null\hfill\textasteriskcentered}
+\AtEndEnvironment{remark}{\null\hfill\textasteriskcentered}
+\AtEndEnvironment{obs}{\null\hfill\textasteriskcentered}
+
+\AtEndEnvironment{ejemplo}{\null\hfill\dag}
+\AtEndEnvironment{ejercicio}{\null\hfill\dag}
+
+%%%%% COMANDOS %%%%%
+
+\SetupFloatingEnvironment{listing}{name=C\'odigo}
+
+%Black-board Letters
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\K}{\mathbb{K}}
+
+%
+\newcommand{\preg}{\textquestiondown}
+\newcommand{\fl}[1]{\overrightarrow{#1}}
+%
+
+\newcommand{\DS}{\displaystyle}
+%Ceil/floor
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+%Convex hull/closed convex hull
+\DeclareMathOperator{\ch}{co}
+\newcommand{\cch}{\overline{\ch}}
+
+%Linear span
+\DeclareMathOperator{\lspan}{span}
+\newcommand{\cspan}{\overline{\lspan}}
+
+%Distance/diameter
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\diam}{diam}
+
+%Diagonal operator
+\DeclareMathOperator{\diag}{diag}
+
+%Locally/support
+\DeclareMathOperator{\loc}{loc}
+\DeclareMathOperator{\supp}{supp}
+
+%interior/domain/id
+\DeclareMathOperator{\inter}{int}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\id}{id}
+
+%weak limits
+\DeclareMathOperator{\wlim}{\omega-lim}
+\DeclareMathOperator{\wslim}{\omega^*-lim}
+
+%differentials and integrals
+\newcommand{\dint}{\displaystyle\int}
+\newcommand{\diint}{\displaystyle\iint}
+\newcommand{\diiint}{\displaystyle\iiint}
+
+\newcommand{\df}{{\rm d}f}
+\newcommand{\dx}{{\rm d}x}
+\newcommand{\dy}{{\rm d}y}
+\newcommand{\dz}{{\rm d}z}
+\newcommand{\dt}{{\rm d}t}
+
+\newcommand{\dxy}{{\rm d}(x,y)}
+\newcommand{\dxyz}{{\rm d}(x,y,z)}
+
+\newcommand{\ds}{{\rm d}s}
+\newcommand{\dS}{{\rm d}S}
+\newcommand{\dV}{{\rm d}V}
+\newcommand{\dA}{{\rm d}A}
+
+\newcommand{\dpf}{\partial f}
+\newcommand{\dpx}{\partial x}
+\newcommand{\dpy}{\partial y}
+\newcommand{\dpz}{\partial z}
+
+%%%%% ITEMS %%%%
+%\newcommand{\hitem}{\item[\color{MidnightBlue}]} 
+%\newcommand{\eitem}{\item[\color{LimeGreen}]}

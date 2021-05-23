@@ -1,0 +1,256 @@
+\begin{problema}
+    Sea \(A=\begin{bmatrix}1 & 2 & 3\\ 4 & 5 & 6\\ 7 & 8 & 9\end{bmatrix}.\) Calcular su determinante usando \texttt{MATLAB}. Explicar por qu\'e el resultado no es un entero.
+\end{problema}
+
+Veamos, en primera instancia, que \(A\) es singular, pues sus vectores fila son linealmente dependientes. En efecto,
+\begin{equation}
+    (-1) \begin{bmatrix}1\\ 2\\ 3\end{bmatrix}^\mathrm{T } + 2 \begin{bmatrix}4\\ 5\\ 6\end{bmatrix}^\mathrm{T } = \begin{bmatrix}7\\ 8\\ 9\end{bmatrix}^\mathrm{T }.
+\end{equation}
+De esto, y de la multilinealidad del determinante, tenemos \(\det A =0\).
+
+Notar que en la \href{https://www.mathworks.com/help/matlab/ref/det.html#bubi9tw}{documentaci\'on de \texttt{MATLAB}} se menciona que se hace uso de la factorizaci\'on LU para calcular el determinante de una matriz. Esto induce errores de aritm\'etica de punto flotante. Para verificar esta \'ultima afirmaci\'on con nuestra matriz \(A\), recordemos que \texttt{MATLAB} utiliza los pivotes de mayor valor. Hacemos \'enfasis en que nos enfocaremos en la matriz \(U:=U(A)\) de la factorizaci\'on LU, pues es la que lleva diagonal significativa. Usaremos eliminaci\'on Gaussiana para repasar el error de arrastre. Si hacemos las (dos) operaciones filas necesarias para simplificar la primera columna, obtenemos
+\[
+    \begin{bmatrix}0 & 6/7 & 12/7\\ 0 & 3/7 & 6/7\\ 7 & 8 & 9\end{bmatrix}.
+\]
+Notar que usando \mintinline{octave}{format long} en \texttt{MATLAB} nos entrega las siguientes aproximaciones:
+\begin{align*}
+    3/7 & \approx 0.428571428571429, & 6/7 & \approx 0.857142857142857, & 12/7 & \approx 1.714285714285714.
+\end{align*}
+Al colocar en la consola de \texttt{MATLAB} el siguiente c\'alculo \mintinline{octave}{0.428571428571429*2 - 0.857142857142857} obtenemos por resultado algo no trivial, \mintinline{octave}{9.992007221626409e-16}.
+En consecuencia, el bloque \(\begin{bmatrix}6/7 & 12/7\\ 3/7 & 6/7\end{bmatrix}\) es no singular \emph{num\'ericamente}. De esta forma, \(U\) es no singular num\'ericamente, y el determinante es no trivial. El siguiente bloque de c\'odigo computa el determinante de \(A\).
+\begin{minted}{octave}
+    format long
+    A = [1 2 3; 4 5 6; 7 8 9];
+    det(A)
+\end{minted}
+
+\begin{problema}
+    El  objetivo es comparar los desempe\~nos de los m\'etodos LU y Cholesky.
+    \begin{enumerate}
+        \item Escribir funci\'on \texttt{LUFacto} que devuelva matrices \(L\) y \(U\) v\'ia Algoritmo 6.1. Si el algoritmo no puede ser ejecutado, devolver un mensaje de error
+        \item Escribir funci\'on \texttt{Cholesky} que devuelva matriz \(B\) v\'ia Algoritmo 6.2. Si el algoritmo no puede ser ejecutado, devolver un mensaje de error. Comparar con la funcion \mintinline{octave}{chol}.
+        \item Definir \mintinline{octave}{A = PdSMat(n)} matriz sim\'etrica positiva definida, y un lado derecho \mintinline{octave}{b = ones(n,1)}. Comparar el tiempo de ejecuci\'on de \mintinline{octave}{LUFacto} y la resoluci\'on con sustituci\'on directa e inversa, contra el tiempo de ejecuci\'on de \mintinline{octave}{Cholesky} y la resoluci\'on con sustituci\'on directa e inversa. Graficar y comentar.
+    \end{enumerate}
+\end{problema}
+
+Es importante comentar que la factorizaci\'on LU (y en consecuencia Cholesky) puede ser almacenada en una sola matriz, pues acoplamos la matriz triangular inferior (ignorando su diagonal de unos, que es conocida) con la matriz triangular superior. M\'as a\'un, gracias a la eliminaci\'on Gaussiana, podemos definir \'ambas matrices sin requerir memoria adicional. Justamente esto es lo que hace el Algoritmo 6.1 (ver \eqref{code:lu}). As\'i mismo, en base al algoritmo 6.2, tenemos \eqref{code:cholesky}.
+
+\begin{listing}[hb!]
+    \inputminted[breaklines=true]{octave}{LUFacto.m}
+    \caption{Fatorizaci\'on LU, v\'ia Algoritmo 6.1}
+    \label{code:lu}
+\end{listing}
+
+\begin{listing}[hb!]
+    \inputminted[breaklines=true]{octave}{Cholesky.m}
+    \caption{Fatorizaci\'on de Cholesky, v\'ia Algoritmo 6.2}
+    \label{code:cholesky}
+\end{listing}
+
+Notar que las diferencias principales con los algoritmos presentados en el libro son los bloques que estudian la no nulidad de los pivotes, en funci\'on de no realizar una operaci\'on inv\'alida. En dichos casos se retorna un mensaje de error y matrices \mintinline{octave}{NaN}.
+
+Para comparar usamos un vector \mintinline{octave}{ times = zeros(2, 100)} para almacenar los tiempos de ejecuci\'on de las distintas factorizaciones. Suponiendo que el tiempo de ejecuci\'on es de la forma
+\[
+    \mathrm{time}(n) \approx p_2 \cdot n^{p_1},
+\]
+usamos \mintinline{octave}{polyfit(log(x),log(times(i,:)),1)} para calzar la mejor l\'inea en un grafico \mintinline{octave}{loglog}, para los distintos m\'etodos. Ver \eqref{code:cholesky-comp}. Obtenemos
+\begin{align*}
+    \mathrm{time}_\mathrm{Cholesky}(n) & \approx \exp(-19.2129)n^{2.6530}\\
+    \mathrm{time}_\mathrm{chol}(n) & \approx \exp(-17.6267)n^{1.7777}.
+\end{align*}
+
+Para el \'ultimo \'item definimos las sustituciones directa \eqref{code:fs} e inversa \eqref{code:bs}. Para la construcci\'on de la matriz sim\'etrica y positiva definida requerimos definir \mintinline{octave}{SymmetricMat} (ver \eqref{code:symmat}) que entrega una matriz sim\'etrica. El c\'odigo \mintinline{octave}{PdSMat} en \eqref{code:pdsmat}, en base a perturbar los valores propios de una matriz sim\'etrica, construye una matriz positiva definida.
+
+Comparamos los valores bajo una premisa similar a la anterior. Ver \eqref{code:solver-comp}. Tenemos 
+\begin{align*}
+    \mathrm{time}_\mathrm{LU-Solver}(n) & \approx \exp(-18.4525)n^{2.7004}\\
+    \mathrm{time}_\mathrm{C-Solver}(n) & \approx \exp(-18.6139)n^{2.5385}.
+\end{align*}
+
+\begin{listing}[hb!]
+    \begin{minted}[breaklines=true]{octave}
+        times = zeros(2,length(1:100));
+        for i = 1:100
+            n = i*10;
+            A = PdSMat(n);
+            
+            tic
+            B = Cholesky(A);
+            times(1,i) = toc;
+            
+            tic
+            B = chol(A);
+            times(2,i) = toc;
+        end
+        x = 10:10:1000;
+        p1 = polyfit(log(x),log(times(1,:)),1);
+        p2 = polyfit(log(x),log(times(2,:)),1);
+
+        figure
+        loglog(x,times(1,:),'*')
+        hold on
+        loglog(x,exp(p1(2)).*x.^p1(1),'--')
+        loglog(x,times(2,:),'o')
+        loglog(x,exp(p2(2)).*x.^p2(1),'--')
+        hold off
+        xlabel('Size of the matrix')
+        ylabel('Time of computation')
+        legend('Cholesky','Best line for Cholesky','chol','Best line for chol')
+    \end{minted}
+    \caption{Comparaci\'on de tiempos de computaci\'on para la factorizaci\'on de Cholesky}
+    \label{code:cholesky-comp}
+\end{listing}
+
+\begin{listing}[hb!]
+    \inputminted[breaklines=true]{octave}{ForwSub.m}
+    \caption{Sustituci\'on directa}
+    \label{code:fs}
+\end{listing}
+
+\begin{listing}[hb!]
+    \inputminted[breaklines=true]{octave}{BackSub.m}
+    \caption{Sustituci\'on inversa}
+    \label{code:bs}
+\end{listing}
+
+\begin{listing}[hb!]
+    \inputminted[breaklines=true]{octave}{SymmetricMat.m}
+    \caption{Matriz sim\'etrica aleatoria}
+    \label{code:symmat}
+\end{listing}
+
+\begin{listing}[hb!]
+    \inputminted[breaklines=true]{octave}{PdSMat.m}
+    \caption{Matriz sim\'etrica positiva definida aleatoria}
+    \label{code:pdsmat}
+\end{listing}
+
+\begin{listing}
+    \begin{minted}[breaklines=true]{octave}
+        times = zeros(2,length(1:50));
+
+        for i = 1:100
+            n = i*10;
+            A = PdSMat(n);
+            b = ones(n,1);
+            
+            tic;
+            [L U] = LUFacto(A);
+            x1 = BackSub(U,ForwSub(L,b));
+            times(1,i) = toc;
+            
+            tic;
+            B = Cholesky(A);
+            x2 = BackSub(B',ForwSub(B,b));
+            times(2,i) = toc;
+        end
+
+        x = 10:10:1000;
+        p1 = polyfit(log(x),log(times(1,:)),1);
+        p2 = polyfit(log(x),log(times(2,:)),1);
+
+        figure
+        loglog(x,times(1,:),'*')
+        hold on
+        loglog(x,exp(p1(2)).*x.^p1(1),'--')
+        loglog(x,times(2,:),'o')
+        loglog(x,exp(p2(2)).*x.^p2(1),'--')
+        hold off
+        xlabel('Size of the matrix')
+        ylabel('Time of computation')
+        legend('LU-based solver','Best line for LU-solver','Cholesky-based solver','Best line for C-solver')
+    \end{minted}
+    \caption{Comparaci\'on de los tiempos de resoluci\'on para las distintas factorizaciones}
+    \label{code:solver-comp}
+\end{listing}
+
+\begin{problema}
+    El objetico es evaluar la influencia de la permutaci\'on de filas en la eliminaci\'on Gaussiana.
+
+    Poner \mintinline{octave}{e=1.E-16; A=[e 1 1;1 -1 1; 1 0 1]; b=[2 0 1]'}.
+    \begin{enumerate}
+        \item Calcular las matrices \mintinline{octave}{[L U]} usando \mintinline{octave}{LUFacto} (ver \eqref{code:lu}).
+        \item Definir dos matrices \mintinline{octave}{[l u]} con \mintinline{octave}{[l u] = LUFacto(p*A)}, con \mintinline{octave}{p} matriz de permutaci\'on definita en \mintinline{octave}{[~ ~ p] = lu(A)}. ?`Qu\'e se observa?
+        \item Determinar la soluci\'on del sistema \(Ax=b\) mediante \mintinline{octave}{BackSub(U,ForwSub(L,b))} y \mintinline{octave}{BackSub(u,ForwSub(l,p*b))}. Comparar con \(x=[0,1,1]^\mathrm{T}\).
+    \end{enumerate}
+\end{problema}
+
+Vemos que, usando \eqref{code:lu1} obtenemos una matriz \mintinline{octave}{U} singular, con fila final nula. Esto se debe nuevamente a los errores de la aritm\'etica de punto flotante. Procedemos como en el primer ejercicio. Hacemos eliminaci\'on Gaussiana \emph{en la primera fila,} pues \eqref{code:lu} no permuta las filas. En tal caso nos queda la matriz
+\[
+    \begin{bmatrix}
+        10^{-16} & 1 & 1\\ 0 & -10^{16} - 1 & -10^{16} +1\\0 & -10^{16} & -10^{16} +1
+    \end{bmatrix}.
+\]
+Vemos que la contribuci\'on de \(\pm 1\) en la submatriz \(\begin{bmatrix}  -10^{16} - 1 & -10^{16} +1\\ -10^{16} & -10^{16} +1 \end{bmatrix} \) es irrelevante, pues es de orden mucho menor que \(10^{16}\). Luego, al despreciarlo nos queda un bloque singular. En t\'erminos m\'as abstractos, dados tres vectores \(u,v,w\) en un espacio vectorial normado, con \(u,v\) linealmente intependientes, podemos hacer que \(u+\lambda w\) y \(v + \lambda w\) se ``parezcan'' si consideramos \(\lambda\) suficientemente grande: podr\'iamos despreciar \(u\) y \(v\) en dichas combinaciones lineales.
+
+En contraste, en \eqref{code:lu2}, si permutamos v\'ia \mintinline{octave}{[~ ~ p]=lu(A)} evitamos el fen\'omeno descrito anteriormente. Si permutamos la primera y la segunda fila de \(A\), obtenemos \(\begin{bmatrix}
+    1 & - 1 & 1\\10^{-16} & 1 & 1\\  1 & 0 &  1
+\end{bmatrix}.\) Haciendo eliminaci\'on Gaussiana tenemos
+\[
+    \begin{bmatrix}
+        1 & - 1 & 1\\0 & 1 + 10^{-16} & 1 -10^{-16}\\  0 & 1 &  0
+    \end{bmatrix},
+\] que despu\'es de despreciar la contribuci\'on de \(\pm 10^{-16}\) sigue siendo no singular. Lo anterior se refleja en el resultado de \eqref{code:lu-solver}: \mintinline{octave}{x1} tiene componentes infinitas y \mintinline{octave}{NaN}.
+
+\begin{listing}[hb!]
+    \begin{minted}[breaklines=true]{octave}
+        e=1.E-16;
+        A=[e 1 1;1 -1 1; 1 0 1];
+        b=[2 0 1]';
+        [L, U] = LUFacto(A);
+    \end{minted}
+    \caption{Factorizaci\'on LU mal comportada}
+    \label{code:lu1}
+\end{listing}
+
+\begin{listing}[hb!]
+    \begin{minted}[breaklines=true]{octave}
+        [~ ~ p]=lu(A);
+        [l u] = LUFacto(p*A)
+    \end{minted}
+    \caption{Factorizaci\'on LU con precondicionador}
+    \label{code:lu2}
+\end{listing}
+
+\begin{listing}[hb!]
+    \begin{minted}[breaklines=true]{octave}
+        x1 = BackSub(U,ForwSub(L,b))
+        x2 = BackSub(u,ForwSub(l,p*b))
+    \end{minted}
+    \caption{Comparaci\'on soluciones de los m\'etodos LU}
+    \label{code:lu-solver}
+\end{listing}
+
+\begin{problema}
+    Sea \(A\) matriz de orden \(n\) con medio ancho de banda \(p\). Para \(n >> p >> 1\), calcular el n\'umero de operaciones \(N_\mathrm{op}(n,p)\) requeridas para la factorizaci\'on LU. (Ver \eqref{code:lu}.)
+\end{problema}
+
+Enfatizamos que el algoritmo \eqref{code:lu} es una forma compacta de describir la eliminaci\'on Gaussiana. En la eliminaci\'on Gaussiana, requeriremos trabajar a lo m\'as \(p\) operaciones fila de a lo m\'as \(p+1\) elementos, pues es la cantidad de elementos potencialmente no nulos a partir de la diagonal, en ambas direcciones. Debido a que sabemos que ocurre bajo el \(k-\)\'esimo t\'ermino de la diagonal, basta considerar los elementos que le suceden.
+
+Es decir, para el paso \(k-\)\'esimo del algoritmo, requerimos hacer operaciones fila desde la fila \(i=k+1\) hasta la fila \(i=\min (k+p,n)\). Dichas operaciones fila reqieren calcular el factor \(a_{i,k}/a_{k,k}\), y tomar la diferencia puntual del \(i-\)\'esimo vector fila contra \(a_{i,k}/a_{k,k}\) veces el \(k-\)\'esimo vector fila, que est\'a soportado entre \(j=k+1\) hasta \(j=\min (k+p,n)\).
+
+Tenemos que el n\'umero de operaciones es descrito por
+\[
+    N_\mathrm{op}(n,p) = \sum_{k=1}^{n-1} \sum_{i=k+1}^{\min\{n, k+p\}} \left( 1 + \sum_{j=k+1}^{\min\{n, k+p\}} 1 \right).
+\]
+Vemos que $k+p\leq n$ si y solo si $k\leq n-p$. Esto nos permite separar la sumatoria. Tenemos \[
+    \begin{array}{rl} N_\mathrm{op}(n,p) & = \sum_{k=1}^{n-1} (\min\{n, k+p\} - k)(\min\{n, k+p\} -k-1)\\ & \\ &= \sum_{k=1}^{n-p} p(p-1) + \sum_{k=n-p+1}^{n-1} (n - k)(n -k-1)\\ & \\ & = p(p-1)(n-p) + \sum_{k=0}^{p-2} k(k+1)\\ & \\ & =  p(p-1)(n-p) + \dfrac{1}{3}p(p-1)(p-2)\\ & \\
+    & = np^2 -p^3 + \dfrac{1}{3}p^3 + O(np + p^2)\\ & \\
+    & = np^2 - \dfrac{2}{3}p^3 + O(np),\end{array}
+\]
+pues \(p^2\leq np\) para \(n>>p\).
+
+\begin{listing}[hb!]
+    \begin{minted}[breaklines=true]{octave}
+        for k=1:(n-1)
+            for i=(k+1):min([n k+p])
+                A(i,k) = A(i,k)/A(k,k);
+                for j=(k+1):min([n k+p])
+                    A(i,j) = A(i,j) - A(i,k)*A(k,j);
+                end
+            end
+        end
+    \end{minted}
+    \caption{Fatorizaci\'on LU para matriz de medio ancho de banda \(p\)}
+    \label{code:lu-band}
+\end{listing}

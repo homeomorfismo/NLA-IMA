@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{format} \PYG{n}{long}
+    \PYG{n}{A} \PYG{p}{=} \PYG{p}{[}\PYG{l+m+mi}{1} \PYG{l+m+mi}{2} \PYG{l+m+mi}{3}\PYG{p}{;} \PYG{l+m+mi}{4} \PYG{l+m+mi}{5} \PYG{l+m+mi}{6}\PYG{p}{;} \PYG{l+m+mi}{7} \PYG{l+m+mi}{8} \PYG{l+m+mi}{9}\PYG{p}{];}
+    \PYG{n+nb}{det}\PYG{p}{(}\PYG{n}{A}\PYG{p}{)}
+\end{Verbatim}

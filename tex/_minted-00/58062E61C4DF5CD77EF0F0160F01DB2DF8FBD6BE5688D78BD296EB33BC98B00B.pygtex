@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }x \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{ForwSub}\PYG{p}{(}L,y\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{n} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{L}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{n}{x} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{k}{for} \PYG{n}{i} \PYG{p}{=} \PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+        \PYG{n}{s} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{for} \PYG{n}{j} \PYG{p}{=} \PYG{l+m+mi}{1}\PYG{p}{:(}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+            \PYG{n}{s} \PYG{p}{=} \PYG{n}{s} \PYG{o}{+} \PYG{n}{L}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{p}{)}\PYG{o}{*}\PYG{n}{x}\PYG{p}{(}\PYG{n}{j}\PYG{p}{);}
+        \PYG{k}{end}
+        \PYG{n}{x}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)} \PYG{p}{=} \PYG{p}{(}\PYG{n}{y}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{s}\PYG{p}{)}\PYG{o}{/}\PYG{n}{L}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{i}\PYG{p}{);}
+    \PYG{k}{end}
+\PYG{k}{end}
+\end{Verbatim}

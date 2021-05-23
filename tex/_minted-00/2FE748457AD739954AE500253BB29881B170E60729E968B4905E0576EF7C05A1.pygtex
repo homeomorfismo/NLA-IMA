@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }S \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{SymmetricMat}\PYG{p}{(}n\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{S} \PYG{p}{=} \PYG{n+nb}{rand}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+    \PYG{n}{S} \PYG{p}{=} \PYG{n}{S} \PYG{o}{+} \PYG{n}{S}\PYG{o}{\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{end}
+\end{Verbatim}

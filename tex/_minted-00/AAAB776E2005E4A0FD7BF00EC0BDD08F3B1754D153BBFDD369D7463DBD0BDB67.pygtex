@@ -1,0 +1,29 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{n}{times} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+nb}{length}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{l+m+mi}{100}\PYG{p}{));}
+        \PYG{n}{for} \PYG{l+s}{i} \PYG{l+s}{=} \PYG{l+s}{1:100}
+            \PYG{n}{n} \PYG{p}{=} \PYG{n+nb}{i}\PYG{o}{*}\PYG{l+m+mi}{10}\PYG{p}{;}
+            \PYG{n}{A} \PYG{p}{=} \PYG{n}{PdSMat}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+
+            \PYG{n}{tic}
+            \PYG{l+s}{B} \PYG{l+s}{=} \PYG{l+s}{Cholesky(A)}\PYG{p}{;}
+            \PYG{n}{times}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+nb}{i}\PYG{p}{)} \PYG{p}{=} \PYG{n}{toc}\PYG{p}{;}
+
+            \PYG{n}{tic}
+            \PYG{l+s}{B} \PYG{l+s}{=} \PYG{l+s}{chol(A)}\PYG{p}{;}
+            \PYG{n}{times}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+nb}{i}\PYG{p}{)} \PYG{p}{=} \PYG{n}{toc}\PYG{p}{;}
+        \PYG{n}{end}
+        \PYG{l+s}{x} \PYG{l+s}{=} \PYG{l+s}{10:10:1000}\PYG{p}{;}
+        \PYG{n}{p1} \PYG{p}{=} \PYG{n}{polyfit}\PYG{p}{(}\PYG{n+nb}{log}\PYG{p}{(}\PYG{n}{x}\PYG{p}{),}\PYG{n+nb}{log}\PYG{p}{(}\PYG{n}{times}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,:)),}\PYG{l+m+mi}{1}\PYG{p}{);}
+        \PYG{n}{p2} \PYG{p}{=} \PYG{n}{polyfit}\PYG{p}{(}\PYG{n+nb}{log}\PYG{p}{(}\PYG{n}{x}\PYG{p}{),}\PYG{n+nb}{log}\PYG{p}{(}\PYG{n}{times}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,:)),}\PYG{l+m+mi}{1}\PYG{p}{);}
+
+        \PYG{n}{figure}
+        \PYG{l+s}{loglog(x,times(1,:),\PYGZsq{}*\PYGZsq{})}
+        \PYG{n}{hold} \PYG{l+s}{on}
+        \PYG{n}{loglog}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n+nb}{exp}\PYG{p}{(}\PYG{n}{p1}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{))}\PYG{o}{.*}\PYG{n}{x}\PYG{o}{.\PYGZca{}}\PYG{n}{p1}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{l+s}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{loglog}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{times}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,:),}\PYG{l+s}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{loglog}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n+nb}{exp}\PYG{p}{(}\PYG{n}{p2}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{))}\PYG{o}{.*}\PYG{n}{x}\PYG{o}{.\PYGZca{}}\PYG{n}{p2}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{l+s}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{hold} \PYG{l+s}{off}
+        \PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Size of the matrix\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Time of computation\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{legend}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Cholesky\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Best line for Cholesky\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}chol\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Best line for chol\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{n}{for} \PYG{l+s}{k=1:(n\PYGZhy{}1)}
+            \PYG{n}{for} \PYG{l+s}{i=(k+1):min([n} \PYG{l+s}{k+p])}
+                \PYG{n}{A}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)} \PYG{p}{=} \PYG{n}{A}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)}\PYG{o}{/}\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{n}{k}\PYG{p}{);}
+                \PYG{n}{for} \PYG{l+s}{j=(k+1):min([n} \PYG{l+s}{k+p])}
+                    \PYG{n}{A}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)} \PYG{p}{=} \PYG{n}{A}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{A}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)}\PYG{o}{*}\PYG{n}{A}\PYG{p}{(}\PYG{n}{k}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{);}
+                \PYG{n}{end}
+            \PYG{l+s}{end}
+        \PYG{n}{end}
+\end{Verbatim}

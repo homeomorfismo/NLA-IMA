@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{BackSub}\PYG{p}{(}\PYG{n}{u}\PYG{p}{,}\PYG{n}{ForwSub}\PYG{p}{(}\PYG{n}{l}\PYG{p}{,}\PYG{n}{p}\PYG{o}{*}\PYG{n}{b}\PYG{p}{))}
+\end{Verbatim}

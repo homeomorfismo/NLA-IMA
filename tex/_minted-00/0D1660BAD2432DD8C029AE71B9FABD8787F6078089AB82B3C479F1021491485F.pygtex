@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }x \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{BackSub}\PYG{p}{(}U,y\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{n} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{U}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{n}{x} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{n}{for} \PYG{l+s}{i} \PYG{l+s}{=} \PYG{l+s}{n:\PYGZhy{}1:1}
+        \PYG{n}{s} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{n}{for} \PYG{l+s}{j} \PYG{l+s}{=} \PYG{l+s}{n:\PYGZhy{}1:(i+1)}
+            \PYG{n}{s} \PYG{p}{=} \PYG{n}{s} \PYG{o}{+} \PYG{n}{U}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{n+nb}{j}\PYG{p}{)}\PYG{o}{*}\PYG{n}{x}\PYG{p}{(}\PYG{n+nb}{j}\PYG{p}{);}
+        \PYG{n}{end}
+        \PYG{l+s}{x(i)} \PYG{l+s}{=} \PYG{l+s}{(y(i)\PYGZhy{}s)/U(i,i)}\PYG{p}{;}
+    \PYG{n}{end}
+\PYG{l+s}{end}
+\end{Verbatim}

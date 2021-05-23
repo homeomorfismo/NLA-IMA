@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{p}{[}\PYG{o}{\PYGZti{}} \PYG{o}{\PYGZti{}} \PYG{n}{p}\PYG{p}{]=}\PYG{n}{lu}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+        \PYG{p}{[}\PYG{n}{l} \PYG{n}{u}\PYG{p}{]} \PYG{p}{=} \PYG{n}{LUFacto}\PYG{p}{(}\PYG{n}{p}\PYG{o}{*}\PYG{n}{A}\PYG{p}{)}
+\end{Verbatim}
